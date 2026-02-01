@@ -1,12 +1,9 @@
-# Security Policy
+# 安全政策
 
-## Reporting a Vulnerability
+## 报告漏洞
 
-Please feel free to draft a
-[GitHub advisory](https://github.com/OpenBB-finance/OpenBB/security/advisories/new),
-and we will work with you to disclose and/or resolve the issue responsibly.
+请随时起草一个 [GitHub 安全公告](https://github.com/OpenBB-finance/OpenBB/security/advisories/new)，我们将与您合作负责任地披露和/或解决问题。
 
-If this doesn't seem like the right approach or there are questions, please feel
-free to reach out to <support@openbb.co>
+如果这似乎不是正确的方法或有任何问题，请随时联系 <support@openbb.co>
 
-Thank you.
+谢谢。

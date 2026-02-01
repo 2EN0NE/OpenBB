@@ -1,158 +1,144 @@
-# OpenBB Platform
+# OpenBB 开放数据平台
 
 [![Downloads](https://static.pepy.tech/badge/openbb)](https://pepy.tech/project/openbb)
 [![LatestRelease](https://badge.fury.io/py/openbb.svg)](https://github.com/OpenBB-finance/OpenBB)
 
-| OpenBB is committed to build the future of investment research by focusing on an open source infrastructure accessible to everyone, everywhere. |
-| :---------------------------------------------------------------------------------------------------------------------------------------------: |
-|              ![OpenBBLogo](https://user-images.githubusercontent.com/25267873/218899768-1f0964b8-326c-4f35-af6f-ea0946ac970b.png)               |
-|                                                 Check our website at [openbb.co](https://www.openbb.co)                                         |
+OpenBB 开放数据平台（ODP）是一个开源工具集，帮助数据工程师将专有、授权和公共数据源集成到下游应用程序中。
 
-## Overview
+ODP 作为"一次连接，随处消费"的基础设施层，将数据暴露给多个消费端：Python 环境、OpenBB Workspace、MCP 服务器和 REST API。
 
-The OpenBB Platform provides a convenient way to access raw financial data from multiple data providers. The package comes with a ready to use REST API - this allows developers from any language to easily create applications on top of OpenBB Platform.
+## 概述
 
-Please find the complete documentation at [docs.openbb.co](https://docs.openbb.co/platform).
+OpenBB 平台提供了一种便捷的方式来访问多个数据提供商的原始金融数据。该包附带了一个即用的 REST API - 允许来自任何语言的开发人员轻松地在 OpenBB 平台之上创建应用程序。
 
-## Installation
+完整文档请访问 [docs.openbb.co](https://docs.openbb.co/platform)。
 
-### PyPI
+## 从源码安装
 
-The command below provides access to the core functionalities behind the OpenBB Platform, and a selection of sources.
+### 环境要求
 
-```bash
-pip install openbb
-```
+- Python 3.10 - 3.13
+- Poetry (`pip install poetry`)
 
-This will install the core, router modules, and the following data providers:
-
-| Extension Name | Description | Installation Command | Minimum Subscription Type Required |
-|----------------|-------------|----------------------|------------------------------------|
-| openbb-benzinga | [Benzinga](https://www.benzinga.com/apis/en-ca/) data connector | pip install openbb-benzinga | Paid |
-| openbb-bls | [Bureau of Labor Statistics](https://www.bls.gov/developers/home.htm) data connector | pip install openbb-bls | Free |
-| openbb-congress-gov | [US Congress API](https://api.congress.gov/sign-up/) data connector | pip install openbb-congress-gov | Free |
-| openbb-cftc | [Commodity Futures Trading Commission](https://publicreporting.cftc.gov/stories/s/r4w3-av2u) data connector | pip install openbb-cftc | Free |
-| openbb-econdb | [EconDB](https://econdb.com) data connector | pip install openbb-econdb | None |
-| openbb-imf | [IMF](https://data.imf.org) data connector | pip install openbb-imf | None |
-| openbb-fmp | [FMP](https://site.financialmodelingprep.com/developer/) data connector | pip install openbb-fmp | Free |
-| openbb-fred | [FRED](https://fred.stlouisfed.org/) data connector | pip install openbb-fred | Free |
-| openbb-intrinio | [Intrinio](https://intrinio.com/pricing) data connector | pip install openbb-intrinio | Paid |
-| openbb-oecd | [OECD](https://data.oecd.org/) data connector | pip install openbb-oecd | Free |
-| openbb-polygon | [Polygon](https://polygon.io/) data connector | pip install openbb-polygon | Free |
-| openbb-sec | [SEC](https://www.sec.gov/edgar/sec-api-documentation) data connector | pip install openbb-sec | None |
-| openbb-tiingo | [Tiingo](https://www.tiingo.com/about/pricing) data connector | pip install openbb-tiingo | Free |
-| openbb-tradingeconomics | [TradingEconomics](https://tradingeconomics.com/api) data connector | pip install openbb-tradingeconomics | Paid |
-| openbb-yfinance | [Yahoo Finance](https://finance.yahoo.com/) data connector | pip install openbb-yfinance | None |
-
-### Extras
-
-These packages are not installed when `pip install openbb` is run.  They are available for installation separately or by running `pip install openbb[all]`.
-
-| Extension Name | Description | Installation Command | Minimum Subscription Type Required |
-|----------------|-------------|----------------------|------------------------------------|
-| openbb-mcp-server | Run the OpenBB Platform as a [MCP server](https://pypi.org/project/openbb-mcp-server/) | pip install openbb-mcp-server | None |
-| openbb-charting | Integrated [Plotly charting library](https://pypi.org/project/openbb-charting/) and dedicated window rendering. | pip install openbb-charting | None |
-| openbb-alpha-vantage | [Alpha Vantage](https://www.alphavantage.co/) data connector | pip install openbb-alpha-vantage | Free |
-| openbb-biztoc | [Biztoc](https://api.biztoc.com/#biztoc-default) News data connector | pip install openbb-biztoc | Free |
-| openbb-cboe | [Cboe](https://www.cboe.com/delayed_quotes/) data connector | pip install openbb-cboe | None |
-| openbb-deribit | [Deribit](https://docs.deribit.com/) data connector | pip install openbb-deribit | None | - |
-| openbb-ecb | [ECB](https://data.ecb.europa.eu/) data connector | pip install openbb-ecb | None |
-| openbb-famafrench | [Ken French Data Library](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html) connector | pip install openbb-famafrench | None | - |
-| openbb-federal-reserve | [Federal Reserve](https://www.federalreserve.gov/) data connector | pip install openbb-federal-reserve | None |
-| openbb-finra | [FINRA](https://www.finra.org/finra-data) data connector | pip install openbb-finra | None / Free |
-| openbb-finviz | [Finviz](https://finviz.com) data connector | pip install openbb-finviz | None |
-| openbb-government-us | [US Government](https://data.gov) data connector | pip install openbb-us-government | None |
-| openbb-nasdaq | [Nasdaq Data Link](https://data.nasdaq.com/) connector | pip install openbb-nasdaq | None / Free |
-| openbb-seeking-alpha | [Seeking Alpha](https://seekingalpha.com/) data connector | pip install openbb-seeking-alpha | None |
-| openbb-stockgrid | [Stockgrid](https://stockgrid.io) data connector | pip install openbb-stockgrid | None |
-| openbb-tmx | [TMX](https://money.tmx.com) data connector | pip install openbb-tmx | None |
-| openbb-tradier | [Tradier](https://tradier.com) data connector | pip install openbb-tradier | None |
-| openbb-wsj | [Wall Street Journal](https://www.wsj.com/) data connector | pip install openbb-wsj | None |
-
+### 安装步骤
 
 ```bash
-pip install openbb-equity openbb-yfinance
+# 克隆仓库
+git clone https://github.com/OpenBB-finance/OpenBB.git
+cd OpenBB/openbb_platform
+
+# 开发安装（安装所有核心包、扩展和数据源）
+python dev_install.py -e
+
+# 可选：同时安装 CLI
+python dev_install.py -e --cli
 ```
 
-## Python
+## 快速开始
+
+### Python 使用示例
 
 ```python
->>> from openbb import obb
->>> output = obb.equity.price.historical("AAPL")
->>> df = output.to_dataframe()
->>> df.tail()
+from openbb import obb
+
+# 获取股票历史价格
+output = obb.equity.price.historical("AAPL")
+df = output.to_dataframe()
+print(df.tail())
 ```
 
-| date       |    open |   high |    low |   close |
-|:-----------|--------:|-------:|-------:|--------:|
-| 2025-09-30 | 254.86  | 255.92 | 253.11 |  254.63 |
-| 2025-10-01 | 255.04  | 258.79 | 254.93 |  255.45 |
-| 2025-10-02 | 256.58  | 258.18 | 254.15 |  257.13 |
-| 2025-10-03 | 254.67  | 259.24 | 253.95 |  258.02 |
-| 2025-10-06 | 257.945 | 259.07 | 255.05 |  256.69 |
+### 启动 REST API 服务器
 
+```bash
+# 方式1：使用 openbb-api 命令
+openbb-api
 
-## API keys
+# 方式2：使用 uvicorn 直接启动
+uvicorn openbb_core.api.rest_api:app --host 0.0.0.0 --port 8000 --reload
+```
 
-To fully leverage the OpenBB Platform you need to get some API keys to connect with data providers (listed above).
+API 文档可在 `http://127.0.0.1:8000/docs` 查看。
 
-Here's how to set them:
+### 启动 CLI
 
-### Local file
+```bash
+openbb
+```
 
-Specify the keys directly in the `~/.openbb_platform/user_settings.json` file.
+## API 密钥配置
 
-Populate this file with the following template and replace the values with your keys:
+创建文件 `~/.openbb_platform/user_settings.json`：
 
 ```json
 {
   "credentials": {
-    "fmp_api_key": "REPLACE_ME",
-    "polygon_api_key": "REPLACE_ME",
-    "benzinga_api_key": "REPLACE_ME",
-    "fred_api_key": "REPLACE_ME"
+    "fmp_api_key": "你的密钥",
+    "polygon_api_key": "你的密钥",
+    "fred_api_key": "你的密钥",
+    "benzinga_api_key": "你的密钥"
   }
 }
 ```
 
-### Runtime
-
-Credentials can be set for the current session only, using the Python interface.
+或在运行时设置：
 
 ```python
->>> from openbb import obb
->>> obb.user.credentials.fred_api_key = "REPLACE_ME"
->>> obb.user.credentials.polygon_api_key = "REPLACE_ME"
+from openbb import obb
+obb.user.credentials.fred_api_key = "你的密钥"
 ```
 
-Go to the [documentation](https://docs.openbb.co/platform/settings/user_settings/api_keys) for more details.
+## 数据源提供商
 
-## REST API
+### 主要免费数据源
 
-The OpenBB Platform comes with a ready-to-use REST API built with FastAPI. Start the application using this command:
+| 提供商 | 包名 | 描述 |
+|--------|------|------|
+| Yahoo Finance | openbb-yfinance | 免费股票数据 |
+| FRED | openbb-fred | 美联储经济数据 |
+| SEC | openbb-sec | 美国证监会数据 |
+| FMP | openbb-fmp | Financial Modeling Prep |
+| Polygon | openbb-polygon | 股票和加密货币数据 |
+
+### 安装特定数据源
 
 ```bash
-uvicorn openbb_core.api.rest_api:app --host 0.0.0.0 --port 8000 --reload
+# 开发模式下安装（从本地源码）
+pip install -e ./providers/yfinance
+
+# 或在安装后启用
+openbb-build
 ```
 
-API documentation is found under "/docs", from the root of the server address, and is viewable in any browser supporting HTTP over localhost, such as Chrome.
+## 运行测试
 
-See the [documentation](https://docs.openbb.co/platform/settings/system_settings#api-settings) for runtime settings and configurations.
+```bash
+# 单元测试
+pytest openbb_platform -m "not integration"
 
-## Local Development
+# 集成测试（需要 API 服务器运行）
+pytest openbb_platform -m integration
 
-To develop with the source code, you need to have the following:
+# 全部测试
+pytest openbb_platform
+```
 
-- Git
-- Python 3.10 - 3.13.
-- Virtual Environment with `poetry` installed.
-  - Activate your virtual environment and run, `pip install poetry`.
-- A local copy of the [GitHub repository](https://github.com/OpenBB-finance/OpenBB.git)
+## 模块结构
 
-Install the repository for local development by using the installation script.
+```
+openbb_platform/
+├── core/               # 核心功能（FastAPI、Pydantic 模型、Provider 接口）
+├── extensions/         # 扩展模块（股票、加密、经济等）
+├── providers/          # 数据源提供商
+├── obbject_extensions/ # 对象扩展（图表）
+└── dev_install.py      # 开发安装脚本
+```
 
-  1. Activate your virtual environment.
-  2. Navigate into the `openbb_platform` folder.
-  3. Run `python dev_install.py -e` to install all packages in editable mode.
+## 开发指南
 
-See the [documentation](https://docs.openbb.co/platform/developer_guide/architecture_overview) for an overview of the architecture and how to get started building your own extensions.
+- [工程知识文档](../docs/knowledge/02-openbb-platform.md)
+- [核心模块详解](../docs/knowledge/02-openbb-platform.md)
+- [扩展开发指南](./CONTRIBUTING.md)
+
+## 许可证
+
+AGPL-3.0 License

@@ -1,55 +1,83 @@
-# Open Data Platform by OpenBB
+# OpenBB 开放数据平台 - 核心模块
 
-Open Data Platform by OpenBB (ODP) is the open-source toolset that helps data engineers integrate proprietary, licensed, and public data sources into downstream applications like AI copilots and research dashboards.
+OpenBB 开放数据平台（ODP）的开源工具集，帮助数据工程师集成各种数据源。
 
-ODP operates as the "connect once, consume everywhere" infrastructure layer that consolidates and exposes data to multiple surfaces at once: Python environments for quants, OpenBB Workspace and Excel for analysts, MCP servers for AI agents, and REST APIs for other applications.
+ODP 作为"一次连接，随处消费"的基础设施层，将数据暴露给多个消费端：Python 环境、OpenBB Workspace、MCP 服务器和 REST API。
 
-## Overview
+## 概述
 
-The Core extension is used as the basis for building and integrating Open Data Platform Python packages.
-It provides the necessary classes and structures for standardizing and handling data.
-It is also responsible for generating a REST API and Python package static assets,
-which operate independently and interface with various consumption vehicles.
+核心扩展（Core）是构建和集成 OpenBB 数据平台 Python 包的基础。它提供了标准化和处理数据所需的类和结构。
 
-Typically, this library will be used as a project dependency, and extended.
+它还负责生成 REST API 和 Python 包的静态资源，这些资源独立运行并与各种消费端接口。
 
-Go to the [documentation](https://docs.openbb.co/python/developer) for information on getting started.
+通常，该库将作为项目依赖使用并进行扩展。
 
-### Prerequisites
+开发入门信息请访问 [文档](https://docs.openbb.co/python/developer)。
+
+### 环境要求
 
 - Python >=3.10,<3.14
-- Familiarity with FastAPI and Pydantic.
+- 熟悉 FastAPI 和 Pydantic
 
-### Installation
+### 从源码安装
 
-Installing through pip:
-
-```sh
-pip install openbb-core
+```bash
+cd openbb_platform/core
+pip install -e .
 ```
 
-> Note that, the openbb-core is an infrastructural component of the OpenBB Platform. It is not intended to be used as a standalone package.
+> 注意：openbb-core 是 OpenBB 平台的基础设施组件，不建议作为独立包使用。
 
-### Build
+### 构建
 
-Build the Python application, with installed extensions, by running:
+使用已安装的扩展构建 Python 应用程序：
 
-```sh
+```bash
 openbb-build
 ```
 
-## Key Features
+## 核心特性
 
-- **Standardized Data Model** (`Data` Class): A flexible and dynamic Pydantic model capable of handling various data structures.
-- **Standardized Query Params** (`QueryParams` Class): A Pydantic model for handling querying to different providers.
-- **Dynamic Field Support**: Enables handling of undefined fields, providing versatility in data processing.
-- **Robust Data Validation**: Utilizes Pydantic's validation features to ensure data integrity.
-- **API Routing Mechanism** (`Router` Class): Simplifies the process of defining API routes and endpoints - out of the box Python and Web endpoints.
+- **标准化数据模型** (`Data` 类): 灵活且动态的 Pydantic 模型，能够处理各种数据结构
+- **标准化查询参数** (`QueryParams` 类): 用于处理对不同提供商查询的 Pydantic 模型
+- **动态字段支持**: 支持处理未定义的字段，提供数据处理的多功能性
+- **强大的数据验证**: 利用 Pydantic 的验证特性确保数据完整性
+- **API 路由机制** (`Router` 类): 简化定义 API 路由和端点的过程 - 开箱即用的 Python 和 Web 端点
 
-## Bugs
+## 核心架构
 
-Report bugs on [Github](https://github.com/OpenBB-finance/OpenBB/issues/new/choose) by opening a new issue, or commenting on an already open one, with all the details.
+```
+core/openbb_core/
+├── api/              # REST API 实现
+│   ├── rest_api.py   # FastAPI 入口
+│   └── router/       # 路由定义
+├── app/              # 应用逻辑
+│   ├── model/        # 数据模型
+│   ├── service/      # 服务层
+│   └── static/       # 静态资源生成
+└── provider/         # Provider 抽象层
+    ├── abstract/     # 抽象基类
+    └── standard_models/  # 标准数据模型
+```
 
-## License
+## 关键类说明
 
-This project is licensed under the AGPL-3.0 License - see the [LICENSE.md](https://github.com/OpenBB-finance/OpenBB/blob/main/LICENSE) file for details.
+| 类 | 文件 | 功能 |
+|----|------|------|
+| `Data` | `provider/abstract/data.py` | 标准化数据模型基类 |
+| `QueryParams` | `provider/abstract/query_params.py` | 标准化查询参数基类 |
+| `Fetcher` | `provider/abstract/fetcher.py` | 数据获取抽象类 |
+| `Router` | `app/router.py` | API 路由基类 |
+| `OBBject` | `app/model/obbject.py` | 统一返回对象 |
+
+## 开发指南
+
+[核心模块详解](../../docs/knowledge/02-openbb-platform.md)
+
+## 报告问题
+
+在 [Github](https://github.com/OpenBB-finance/OpenBB/issues/new/choose) 上报告问题。
+
+## 许可证
+
+AGPL-3.0 License

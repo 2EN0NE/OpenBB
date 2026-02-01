@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# OpenBB Plotly 图表组件
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+基于 React + TypeScript + Plotly 的图表组件，用于 OpenBB 平台的数据可视化。
 
-## Available Scripts
+## 技术栈
 
-In the project directory, you can run:
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- Plotly.js
 
-### `npm start`
+## 从源码安装
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+cd frontend-components/plotly
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# 安装依赖
+npm install
 
-### `npm test`
+# 启动开发服务器
+npm run dev
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 构建生产版本
+npm run build
+```
 
-### `npm run build`
+## 组件列表
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| 组件 | 路径 | 功能 |
+|------|------|------|
+| Chart | `components/Chart.tsx` | 主图表组件 |
+| AutoScaling | `components/AutoScaling.tsx` | 自动缩放 |
+| Config | `components/Config.tsx` | 配置面板 |
+| PlotlyConfig | `components/PlotlyConfig.tsx` | Plotly 配置 |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Dialog 组件
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| 组件 | 路径 | 功能 |
+|------|------|------|
+| AlertDialog | `components/Dialogs/AlertDialog.tsx` | 警告对话框 |
+| CommonDialog | `components/Dialogs/CommonDialog.tsx` | 通用对话框 |
+| OverlayChartDialog | `components/Dialogs/OverlayChartDialog.tsx` | 叠加图表 |
 
-### `npm run eject`
+## 与 OpenBB Platform 集成
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+构建后的文件被复制到：
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+openbb_platform/obbject_extensions/charting/openbb_charting/core/assets/
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+在 Python 中使用：
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```python
+from openbb import obb
 
-## Learn More
+# 显示图表
+obb.equity.price.historical("AAPL", chart=True)
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 开发
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+# 类型检查
+npx tsc --noEmit
 
-### Code Splitting
+# 代码检查
+npx eslint src/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# 运行测试
+npm test
+```
 
-### Analyzing the Bundle Size
+## 许可证
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+AGPL-3.0 License

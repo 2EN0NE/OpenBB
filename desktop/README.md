@@ -1,69 +1,46 @@
-# Open Data Platform - by OpenBB - Desktop Application
+# OpenBB 开放数据平台 - 桌面应用程序
 
-The ODP Desktop Application enhances the developer experience by lowering the technical barriers to entry
-for building, presenting, and sharing data pipelines, insights or dashboarding experiences over multiple interfaces.
+ODP 桌面应用程序通过降低技术门槛来增强开发者体验，用于构建、展示和共享数据管道、洞察或多界面仪表板体验。
 
-This code library represents the complete source code for the Open Data Platform (ODP) desktop application and system tray icon, as published by OpenBB.
+此代码库代表 OpenBB 发布的开放数据平台（ODP）桌面应用程序和系统托盘图标的完整源代码。
 
-The distributed binaries (currently macOS and Windows) are the direct output of build actions, located in this repository, responsible for generating release artifacts.
+分发的二进制文件（目前为 macOS 和 Windows）是此仓库中构建操作的直接输出，负责生成发布工件。
 
-Please note that while there are no build pipelines for a Linux distribution, it is possible to build and install locally.
+请注意，虽然没有 Linux 分发的构建管道，但可以在本地构建和安装。
 
-## User Documentation & Installation
+## 从源码构建和运行
 
-Official user documentation is located [here](https://docs.openbb.co/desktop).
+### 环境要求
 
-Download the latest version [here](https://github.com/OpenBB-finance/OpenBB/releases/tag/odp)
+- **Rust** 1.90.0+
+- **Node.js** 和 **NPM**
+- **OpenSSL**
 
-The remainder of this document is intended for orienting and onboarding to the codebase.
-
-## Stack Overview
-
-ODP Desktop is built with a Tauri & React framework, the code is approximately 50/50, Rust/TypeScript.
-
-This stack reduces the distribution size by relying on the operating system for window creation.
-Installed, it is approximately 35 MB; compressed, 12 MB.
-
-The application is tray icon - background service - where functions rely on developer tools that are installed separately via ODP.
-In other words, the application itself is a GUI and wrapper for interacting with the operating system and command line.
-
-It is assumed that no developer tools are installed in the operating system, and the user does not have admin/root access to the machine.
-Multi-user machines must be configured per-user.
-
-To facilitate environment management and dependency solving, Miniforge is installed when ODP Desktop is first run.
-Conda was selected for its effective isolation patterns, as well as platform and language-agnostic qualities.
-
-The initial installation environment provides a production-ready REST API, MCP server, NodeJS, and Jupyter Lab IDE.
-
-## Running Code
-
-Run this code locally from a development server by following the steps below.
-
-### Rust
-
-You must install, or update, Rust to use version 1.90.0
+### 1. 安装 Rust
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-If you have previously installed Rust, update to the latest version (currently rustc 1.90.0)
+如果已安装 Rust，更新到最新版本：
 
 ```sh
 rustup update
 ```
 
-### NodeJS
+### 2. 安装 Node.js
 
-NodeJS and NPM must also be available on $PATH.
+按照 [此处](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 的说明安装。
 
-Follow the instructions [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) if you do not have it installed.
+如果已有 `npm`，请在安装项目前更新：
 
-If you already have `npm`, update it before installing the project.
+```bash
+npm install -g npm
+```
 
-### OpenSSL
+### 3. 安装 OpenSSL
 
-OpenSSL must be installed on the system, with exposed environment variables for:
+系统必须安装 OpenSSL，并设置以下环境变量：
 
 ```env
 OPENSSL_DIR
@@ -71,36 +48,73 @@ OPENSSL_INCLUDE_DIR
 OPENSSL_LIB_DIR
 ```
 
-### Install Project
+### 4. 安装项目依赖
 
-With those three, items installed and updated, install the project by running the command from the `/desktop` root folder.
+在 `/desktop` 根文件夹下运行：
 
 ```sh
 npm install
 ```
 
-### Develop
-
-Build and start the development server:
+### 5. 启动开发服务器
 
 ```sh
 npm run tauri dev
 ```
 
-This will start the development server and watch for changes to the codebase. Most changes will be picked up, but some events may require a full restart.
+这将启动开发服务器并监视代码库的更改。大多数更改会被自动检测，但某些事件可能需要完全重启。
 
-If you use a browser, instead of the window, to view the development server there will be stuff that just doesn't work. This is expected.
+如果使用浏览器而非窗口查看开发服务器，某些功能将无法工作。这是预期的行为。
 
-Ignore all of the warning messages for now, we'll clean those up later.
+目前请忽略所有警告消息，我们稍后会清理。
 
+## 技术栈
 
-### Helpful VS Code Extension
+ODP Desktop 使用 Tauri & React 框架构建，代码大约是 50/50 的 Rust/TypeScript。
+
+此技术栈通过依赖操作系统进行窗口创建来减少分发大小。安装后大约 35 MB；压缩后 12 MB。
+
+该应用程序是托盘图标 - 后台服务 - 功能依赖于通过 ODP 单独安装的开发者工具。
+
+换句话说，应用程序本身是与操作系统和命令行交互的 GUI 和包装器。
+
+### 核心功能
+
+- **环境管理**: 通过 Miniforge/Conda 管理 Python 环境
+- **后端服务**: 启动/停止 ODP 后端 API
+- **API 密钥管理**: 图形化配置数据提供商凭证
+- **Jupyter 集成**: 启动 Jupyter Lab IDE
+
+## 项目结构
+
+```
+desktop/
+├── src/                    # 前端源码 (React + TypeScript)
+│   ├── components/         # React 组件
+│   ├── routes/             # 页面路由
+│   └── tests/              # 测试文件
+├── src-tauri/              # Tauri (Rust) 源码
+│   ├── src/
+│   │   ├── tauri_handlers/ # 命令处理器
+│   │   └── utils/          # 工具模块
+│   └── icons/              # 应用图标
+└── package.json
+```
+
+## 推荐的 VS Code 扩展
 
 - rust-analyzer
 - Tauri
 - Tailwind CSS IntelliSense
 
-## Building
+## 构建生产版本
 
-Production builds are intended to be completed and signed via GitHub actions. Adjustments to `beforeBundleCommand` may be required for builds outside of the official release structure.
+生产构建计划通过 GitHub Actions 完成和签名。官方发布结构之外的构建可能需要调整 `beforeBundleCommand`。
 
+## 开发指南
+
+[Desktop 模块详解](../docs/knowledge/05-desktop-module.md)
+
+## 许可证
+
+参见 [LICENSE](../LICENSE)
