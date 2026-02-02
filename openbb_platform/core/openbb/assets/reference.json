@@ -6,7 +6,9 @@
         "core": "1.5.9",
         "extensions": {
             "openbb_core_extension": [],
-            "openbb_provider_extension": [],
+            "openbb_provider_extension": [
+                "akshare@0.0.0a1"
+            ],
             "openbb_obbject_extension": []
         }
     },

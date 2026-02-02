@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "openbb-akshare"
+version = "0.0.0a1"
+description = "Akshare - China Stock Market Data Provider for OpenBB"
+authors = ["OpenBB <hello@openbb.co>"]
+license = "AGPL-3.0"
+readme = "README.md"
+packages = [{ include = "openbb_akshare" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.14"
+openbb-core = "^1.5.8"
+akshare = ">=1.11.0"
+
+[tool.poetry.plugins."openbb_provider_extension"]
+akshare = "openbb_akshare:akshare_provider"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.0.0"
+pytest-cov = ">=4.0.0"
+pytest-mock = ">=3.10.0"
+requests-mock = ">=1.10.0"
+
+[tool.poetry.urls]
+Homepage = "https://docs.openbb.co/platform"
+Repository = "https://github.com/OpenBB-finance/OpenBB"
+Issues = "https://github.com/OpenBB-finance/OpenBB/issues"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.pylint.main]
+max-line-length = 120
